@@ -139,28 +139,6 @@ public class Drop extends ApplicationAdapter {
             camera.unproject(touchPos);
             bucket.x = touchPos.x - (float) BUCKET_WIDTH / 2;
         }
-<<<<<<< HEAD
-    }
-
-    private void spawnRaindrop() {
-        Rectangle raindrop = new Rectangle();
-        raindrop.x = MathUtils.random(0, WIDTH - BUCKET_WIDTH);
-        raindrop.y = HEIGHT;
-        raindrop.width = RAINDROP_WIDTH;
-        raindrop.height = RAINDROP_HEIGHT;
-        raindrops.add(raindrop);
-        lastDropTime = TimeUtils.nanoTime();
-    }
-
-    @Override
-    public void dispose() {
-        dropletImg.dispose();
-        bucketImg.dispose();
-        dropletSound.dispose();
-        rainMusic.dispose();
-        batch.dispose();
-=======
->>>>>>> parent of d8c1f64 (Created MainMenu scene)
     }
 
     private void spawnRaindrop() {
@@ -181,5 +159,4 @@ public class Drop extends ApplicationAdapter {
         rainMusic.dispose();
         batch.dispose();
     }
-
 }
