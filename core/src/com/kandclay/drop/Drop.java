@@ -159,5 +159,4 @@ public class Drop extends ApplicationAdapter {
         rainMusic.dispose();
         batch.dispose();
     }
-
 }
