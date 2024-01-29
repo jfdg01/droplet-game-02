@@ -38,8 +38,8 @@ public class MainMenuScreen implements Screen {
         customButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                // Code to execute when the button is pressed
-                Gdx.app.log("Button Pressed", "Yes");
+                game.setScreen(new GameScreen(game));
+                dispose();
             }
         });
 
@@ -65,10 +65,7 @@ public class MainMenuScreen implements Screen {
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
 
-        if (Gdx.input.isTouched()) {
-            game.setScreen(new GameScreen(game));
-            dispose();
-        }
+
     }
 
     @Override

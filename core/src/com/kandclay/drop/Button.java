@@ -18,7 +18,7 @@ public class Button {
         textButtonStyle.font = font;
         textButtonStyle.up = drawable; // Use the image as the button's appearance
 
-        button = new TextButton("Button1", textButtonStyle);
+        button = new TextButton("START", textButtonStyle);
         button.setSize(width, height); // Set the size of the button
     }
 

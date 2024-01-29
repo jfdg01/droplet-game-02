@@ -10,8 +10,8 @@ public class Constants {
     public static final int ONE_SECOND_NS = 1_000_000_000;
 
     // Button dimensions
-    public static final float BUTTON_WIDTH = 200f;
-    public static final float BUTTON_HEIGHT = 50f;
+    public static final float BUTTON_WIDTH = 70f;
+    public static final float BUTTON_HEIGHT = 70f;
 
     // Button position
     public static final float BUTTON_X = (SCREEN_WIDTH - BUTTON_WIDTH) / 2;
