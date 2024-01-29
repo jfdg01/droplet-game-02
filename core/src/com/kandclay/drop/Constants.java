@@ -29,7 +29,7 @@ public class Constants {
 
     // Paths
     public static final String BUTTON_IMAGE_PATH = "sprites/button.png";
-    public static final String DROPLET_IMAGE_PATH = "sprites/droplet.png";
+    public static final String FIRST_DROPLET_IMAGE_PATH = "sprites/droplet-0.png";
     public static final String BUCKET_IMAGE_PATH = "sprites/bucket.png";
     public static final String DROPLET_SOUND_PATH = "sounds/drop.wav";
     public static final String RAIN_MUSIC_PATH = "sounds/rain.mp3";

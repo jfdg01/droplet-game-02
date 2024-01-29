@@ -20,8 +20,7 @@ import static com.kandclay.drop.Constants.*;
 
 public class GameScreen implements Screen {
     final Drop game;
-
-    Texture dropImage;
+    Array<Texture> dropImages;
     Texture bucketImage;
     Sound dropSound;
     Music rainMusic;
@@ -34,8 +33,13 @@ public class GameScreen implements Screen {
     public GameScreen(final Drop game) {
         this.game = game;
 
+        dropImages = new Array<>();
         // load the images for the droplet and the bucket, 64x64 pixels each
-        dropImage = new Texture(Gdx.files.internal(DROPLET_IMAGE_PATH));
+        for (int i = 0; i < 12; i++) {
+            String path = "sprites/droplet-" + i + ".png";
+            Texture dropImage = new Texture(Gdx.files.internal(path));
+            dropImages.add(dropImage);
+        }
         bucketImage = new Texture(Gdx.files.internal(BUCKET_IMAGE_PATH));
 
         // load the drop sound effect and the rain background "music"
@@ -92,7 +96,7 @@ public class GameScreen implements Screen {
         game.font.draw(game.batch, "Drops Collected: " + dropsGathered, 0, SCREEN_HEIGHT);
         game.batch.draw(bucketImage, bucket.x, bucket.y, bucket.width, bucket.height);
         for (Rectangle raindrop : raindrops) {
-            game.batch.draw(dropImage, raindrop.x, raindrop.y);
+            game.batch.draw(dropImages.random(), raindrop.x, raindrop.y);
         }
         game.batch.end();
 
@@ -160,7 +164,9 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-        dropImage.dispose();
+        for (Texture texture: dropImages) {
+            texture.dispose();
+        }
         bucketImage.dispose();
         dropSound.dispose();
         rainMusic.dispose();
