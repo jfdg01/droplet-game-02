@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
+import jdk.internal.net.http.common.Pair;
 
 import java.util.Iterator;
 
@@ -20,26 +21,27 @@ import static com.kandclay.drop.Constants.*;
 
 public class GameScreen implements Screen {
     final Drop game;
-    Array<Texture> dropImages;
+    Array<Texture> dropTextureArray;
     Texture bucketImage;
     Sound dropSound;
     Music rainMusic;
     OrthographicCamera camera;
     Rectangle bucket;
     Array<Rectangle> raindrops;
+
+    // array of pair that stores a raindrop rentangle and its id
+    Array<Pair<Rectangle, Integer>> raindropsWithId;
     long lastDropTime;
     int dropsGathered;
 
     public GameScreen(final Drop game) {
         this.game = game;
 
-        dropImages = new Array<>();
-        // load the images for the droplet and the bucket, 64x64 pixels each
-        for (int i = 0; i < 12; i++) {
-            String path = "sprites/droplet-" + i + ".png";
-            Texture dropImage = new Texture(Gdx.files.internal(path));
-            dropImages.add(dropImage);
+        dropTextureArray = new Array<>();
+        for (int i = 0; i < 13; i++) {
+            dropTextureArray.add(new Texture(Gdx.files.internal("sprites/droplet-" + i + ".png")));
         }
+
         bucketImage = new Texture(Gdx.files.internal(BUCKET_IMAGE_PATH));
 
         // load the drop sound effect and the rain background "music"
@@ -72,31 +74,30 @@ public class GameScreen implements Screen {
         raindrop.width = RAINDROP_WIDTH;
         raindrop.height = RAINDROP_HEIGHT;
         raindrops.add(raindrop);
+        raindropsWithId.add(new Pair<>(raindrop, //raind));
         lastDropTime = TimeUtils.nanoTime();
     }
 
     @Override
     public void render(float delta) {
-        // clear the screen with a dark blue color. The
-        // arguments to clear are the red, green
-        // blue and alpha component in the range [0,1]
-        // of the color to be used to clear the screen.
+        // clear the screen with a dark blue color.
         ScreenUtils.clear(0, 0, 0.2f, 1);
 
         // tell the camera to update its matrices.
         camera.update();
 
-        // tell the SpriteBatch to render in the
-        // coordinate system specified by the camera.
+        // tell the SpriteBatch to render in the coordinate system specified by the camera.
         game.batch.setProjectionMatrix(camera.combined);
 
-        // begin a new batch and draw the bucket and
-        // all drops
+        // begin a new batch and draw the bucket and all drops
         game.batch.begin();
         game.font.draw(game.batch, "Drops Collected: " + dropsGathered, 0, SCREEN_HEIGHT);
         game.batch.draw(bucketImage, bucket.x, bucket.y, bucket.width, bucket.height);
-        for (Rectangle raindrop : raindrops) {
-            game.batch.draw(dropImages.random(), raindrop.x, raindrop.y);
+        for (int i = 0; i < raindrops.size; i++) {
+            Rectangle raindrop = raindrops.get(i);
+            // Set the color of the raindrom to a color of the rainbow depending on its index
+            setRainbowColor(i);
+            game.batch.draw(dropImage, raindrop.x, raindrop.y, raindrop.width, raindrop.height);
         }
         game.batch.end();
 
@@ -164,9 +165,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-        for (Texture texture: dropImages) {
-            texture.dispose();
-        }
+        dropImage.dispose();
         bucketImage.dispose();
         dropSound.dispose();
         rainMusic.dispose();
